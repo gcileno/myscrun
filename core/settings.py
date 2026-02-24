@@ -10,8 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 from datetime import timedelta
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,10 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-(u(6#x*-k1u(#9u*54cp2-@t!_vm%9%d2kvdf6+g9y5ds&pc^f'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-(u(6#x*-k1u(#9u*54cp2-@t!_vm%9%d2kvdf6+g9y5ds&pc^f')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = []
 
@@ -42,6 +46,9 @@ INSTALLED_APPS = [
     # My apps
     'rest_framework',
     'rest_framework_simplejwt',
+    'authentication',
+    'master',
+    'scrun',
 ]
 
 MIDDLEWARE = [
