@@ -1,0 +1,21 @@
+[project]
+name = "myscrun"
+version = "0.1.0"
+description = "Sistema de gerenciamento de projetos ScrunMaster, uma abordagem simples e gratuita para a comunidade"
+authors = [
+    {name = "gcileno",email = "gcmc@softex.cin.ufpe.br"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "django (>=6.0.2,<7.0.0)",
+    "djangorestframework (>=3.16.1,<4.0.0)",
+    "markdown (>=3.10.2,<4.0.0)",
+    "django-filter (>=25.2,<26.0)",
+    "djangorestframework-simplejwt (>=5.5.1,<6.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
