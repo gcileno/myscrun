@@ -5,6 +5,7 @@ description = "Sistema de gerenciamento de projetos ScrunMaster, uma abordagem s
 authors = [
     {name = "gcileno",email = "gcmc@softex.cin.ufpe.br"}
 ]
+package-mode = false
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
