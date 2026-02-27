@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from organization.models import Organization
-from organization.serializers.projects import ProjectSerializer
+from scrun_master.serializers.projects import ProjectSerializer
 
 class OrganizationSerializer(serializers.ModelSerializer):
     projects = ProjectSerializer(many=True, read_only=True)
