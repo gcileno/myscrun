@@ -7,6 +7,26 @@ class Member(models.Model):
     name = models.CharField(max_length=100)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='member')
 
+class OrganizationMember(models.Model):
+    organization = models.ForeignKey(
+        'Organization',
+        on_delete=models.CASCADE
+    )
+
+    member = models.ForeignKey(
+        'Member',
+        on_delete=models.CASCADE
+    )
+
+    invited = models.BooleanField(default=False)
+    accepted = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+
+    invited_at = models.DateTimeField(auto_now_add=True)
+    accepted_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        unique_together = ('organization', 'member')
 
 class Organization(models.Model):
     name = models.CharField(max_length=100)
@@ -20,8 +40,8 @@ class Organization(models.Model):
         related_name='directed_organizations',
         )
     
-    members = models.ManyToManyField(Member, related_name='organizations')
-    
+    members = models.ManyToManyField(Member, through=OrganizationMember, related_name='organizations')
+
     def __str__(self):
         return self.name
 

@@ -4,16 +4,11 @@ from members.models import Member
 class MemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = Member
-        fields = ['id', 'user', 'organization']
-        read_only_fields = ['id']
+        fields = ['id', 'name']
+        
+class MeSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    name = serializers.CharField()
 
-class MemberDetailSerializer(serializers.ModelSerializer):
-
-    organization = serializers.StringRelatedField()
-    user = serializers.StringRelatedField()
-    teams= serializers.SerializerMethodField()
-
-    class Meta:
-        model = Member
-        fields = ['id', 'user', 'organization']
-        read_only_fields = ['id']
+    organizations = OrganizationSimpleSerializer(many=True)
+    projects = ProjectSimpleSerializer(many=True)
