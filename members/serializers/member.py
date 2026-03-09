@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from organization.models import Member
+from members.models import Member
 
 class MemberSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,5 +15,5 @@ class MemberDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Member
-        fields = ['id', 'user', 'organization', 'role']
+        fields = ['id', 'user', 'organization']
         read_only_fields = ['id']

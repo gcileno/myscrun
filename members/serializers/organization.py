@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from organization.models import Organization
+from members.models import Organization
 from scrun_master.serializers.projects import ProjectSerializer
 
 class OrganizationSerializer(serializers.ModelSerializer):

@@ -1,14 +1,20 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from organization.models import Organization
-from organization.models import Member
+from members.models import Organization
+from members.models import Member
 
 User = get_user_model()
 
 class Project(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='projects')
+    organization = models.ForeignKey(
+        Organization, 
+        on_delete=models.CASCADE, 
+        related_name='projects', 
+        blank=False, 
+        null=False
+        )
     master = models.ForeignKey(Member, on_delete=models.SET_NULL, null=True, related_name='project_master')
     key = models.CharField(max_length=10, help_text="Ex: SCRUN-01")
 
