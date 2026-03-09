@@ -1,6 +1,11 @@
 from rest_framework import serializers
 from models import Project, TeamMember
 
+class ProjectSimpleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ["id", "name"]
+        
 class ProjectSerializer(serializers.ModelSerializer):
     # Mostramos o nome da organização em vez de apenas o ID (opcional, mas ajuda o Frontend)
     organization_name = serializers.ReadOnlyField(source='organization.name')
