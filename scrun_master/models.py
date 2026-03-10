@@ -12,8 +12,8 @@ class Project(models.Model):
         Organization, 
         on_delete=models.CASCADE, 
         related_name='projects', 
-        blank=False, 
-        null=False
+        blank=True, 
+        null=True
         )
     master = models.ForeignKey(Member, on_delete=models.SET_NULL, null=True, related_name='project_master')
     key = models.CharField(max_length=10, help_text="Ex: SCRUN-01")
@@ -28,6 +28,7 @@ class TeamMember(models.Model):
         ('po', 'Product Owner'),
         ('dev', 'Developer'),
     ]
+    
     member = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='team_memberships')
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='team')
     role = models.CharField(max_length=3, choices=ROLE_CHOICES)

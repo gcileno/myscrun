@@ -12,7 +12,6 @@ class OrganizationAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "cnpj", "director", "created_at")
     search_fields = ("name", "cnpj")
 
-
 @admin.register(OrganizationMember)
 class OrganizationMemberAdmin(admin.ModelAdmin):
     list_display = ("id", "member", "invited", "accepted", "is_active")
