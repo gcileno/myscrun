@@ -29,7 +29,7 @@ class TeamMember(models.Model):
         ('dev', 'Developer'),
     ]
     member = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='team_memberships')
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='members')
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='team')
     role = models.CharField(max_length=3, choices=ROLE_CHOICES)
 
     class Meta:

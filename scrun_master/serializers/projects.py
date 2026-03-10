@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from models import Project, TeamMember
+from scrun_master.models import Project
 
 class ProjectSimpleSerializer(serializers.ModelSerializer):
     class Meta:

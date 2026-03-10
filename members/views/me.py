@@ -3,8 +3,9 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from members.serializers.member import MeSerializer
+from scrun_master.models import Project
 
-class MeView(APIView):
+class ProfileView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -16,8 +17,10 @@ class MeView(APIView):
             organizationmember__accepted=True
         )
 
-        projects = member.projects.all()
-
+        projects = Project.objects.filter(
+            team__member=member
+        ).distinct()
+                
         data = {
             "id": member.id,
             "name": member.name,

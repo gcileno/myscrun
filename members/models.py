@@ -7,6 +7,13 @@ class Member(models.Model):
     name = models.CharField(max_length=100)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='member')
 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Member'
+        verbose_name_plural = 'Members'
+
 class OrganizationMember(models.Model):
     organization = models.ForeignKey(
         'Organization',
@@ -43,7 +50,7 @@ class Organization(models.Model):
     members = models.ManyToManyField(Member, through=OrganizationMember, related_name='organizations')
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.cnpj}"
 
 
 
