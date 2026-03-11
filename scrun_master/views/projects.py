@@ -1,7 +1,8 @@
 from core.view.viewsets import BaseViewSet
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import permissions
-from models import Project
+from members.models import Member
+from scrun_master.models import Project, TeamMember
 from scrun_master.serializers.projects import ProjectSerializer, ProjectDetailSerializer
 
 class ProjectViewSet(BaseViewSet):
@@ -14,3 +15,14 @@ class ProjectViewSet(BaseViewSet):
     }
 
     permission_classes = [IsAuthenticated, ]
+
+    def perform_create(self, serializer):
+        member = Member.objects.get(user=self.request.user)
+
+        project = serializer.save(master=member)
+
+        TeamMember.objects.create(
+            member=member,
+            project=project,
+            role="sm"
+        )

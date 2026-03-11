@@ -22,5 +22,6 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
 
     path('api/', include('authentication.urls')),
-    path('api/', include('members.urls'))
+    path('api/', include('members.urls')),
+    path('api/', include('scrun_master.urls')),
 ]
