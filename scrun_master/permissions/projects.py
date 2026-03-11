@@ -1,19 +1,41 @@
 from rest_framework import permissions
 from scrun_master.models import TeamMember
 
+from rest_framework import permissions
+from scrun_master.models import TeamMember
+from members.models import Member
+
+
 class IsProjectScrumMaster(permissions.BasePermission):
     """
-    Permite criação de tasks apenas se o utilizador for o SM do projeto.
+    Permite escrita apenas para Scrum Masters do projeto.
     """
+
     def has_permission(self, request, view):
-        if request.method == 'POST':
-            project_id = request.data.get('project')
-            return TeamMember.objects.filter(
-                member__user=request.user,
-                project_id=project_id,
-                role='sm'
-            ).exists()
-        return True
+
+        # leitura liberada para autenticados
+        if request.method in permissions.SAFE_METHODS:
+            return request.user.is_authenticated
+
+        project_id = (
+            request.data.get("project") or
+            view.kwargs.get("project_pk") or
+            view.kwargs.get("project_id")
+        )
+
+        if not project_id:
+            return False
+
+        member = Member.objects.filter(user=request.user).first()
+
+        if not member:
+            return False
+
+        return TeamMember.objects.filter(
+            member=member,
+            project_id=project_id,
+            role="sm"
+        ).exists()
     
 class IsProjectMaster(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
