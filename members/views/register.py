@@ -4,7 +4,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework import status
 from django.db import transaction
 from rest_framework_simplejwt.tokens import RefreshToken
-from members.serializers.user import RegisterSerializer
+from members.serializers.register import RegisterSerializer
 
 class RegisterView(APIView):
     permission_classes = [AllowAny]
