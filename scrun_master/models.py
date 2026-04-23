@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from core.choices import RoleChoices
 from members.models import Organization
 from members.models import Member
 
@@ -22,16 +23,10 @@ class Project(models.Model):
         return f"{self.key} - {self.name}"
 
 class TeamMember(models.Model):
-    ROLE_CHOICES = [
-        ('ow', 'Owner'),
-        ('sm', 'Scrum Master'),
-        ('po', 'Product Owner'),
-        ('dev', 'Developer'),
-    ]
-    
+
     member = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='team_memberships')
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='team')
-    role = models.CharField(max_length=3, choices=ROLE_CHOICES)
+    role = models.CharField(max_length=3, choices=RoleChoices.choices)
 
     class Meta:
         unique_together = ('member', 'project')

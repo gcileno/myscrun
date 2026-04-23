@@ -1,12 +1,12 @@
 from rest_framework import permissions
-from scrun_master.models import TeamMember
-
 from rest_framework import permissions
+from core.choices import RoleChoices
+from scrun_master.models import Project
 from scrun_master.models import TeamMember
 from members.models import Member
 
 
-class IsProjectScrumMaster(permissions.BasePermission):
+class IsProjectScrumMasterOrOwner(permissions.BasePermission):
     """
     Permite escrita apenas para Scrum Masters do projeto.
     """
@@ -34,7 +34,7 @@ class IsProjectScrumMaster(permissions.BasePermission):
         return TeamMember.objects.filter(
             member=member,
             project_id=project_id,
-            role="sm"
+            role__in=[RoleChoices.SCRUM_MASTER, RoleChoices.OWNER]
         ).exists()
     
 class IsProjectMaster(permissions.BasePermission):

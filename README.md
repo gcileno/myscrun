@@ -6,6 +6,9 @@ MySCRUM helps teams plan, track and deliver software projects with sprints, task
 
 ---
 
+## Documentação
+- [Diagrama ER](docs\er-diagram.md)
+
 ## ✨ Features
 
 - 📋 **Sprint management** — create and manage sprints with backlog, in progress and done columns
