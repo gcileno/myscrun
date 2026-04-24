@@ -14,5 +14,5 @@ class OrganizationAdmin(admin.ModelAdmin):
 
 @admin.register(OrganizationMember)
 class OrganizationMemberAdmin(admin.ModelAdmin):
-    list_display = ("id", "member", "invited", "accepted", "is_active")
+    list_display = ("id", "member", "is_active")
     search_fields = ("organization__name", "member__name")

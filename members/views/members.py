@@ -1,5 +1,5 @@
 from rest_framework import viewsets, serializers
-from members.permissions.member import MemberPermission
+from core.permissions.member import MemberPermission
 from serializers.member import MemberSerializer
 from scrun_master.models import Member
 

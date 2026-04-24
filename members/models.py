@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
+from core.choices import OrganizationRoleChoices, RoleChoices
+
 User = get_user_model()
 
 class Member(models.Model):
@@ -25,12 +27,8 @@ class OrganizationMember(models.Model):
         on_delete=models.CASCADE
     )
 
-    invited = models.BooleanField(default=False)
-    accepted = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-
-    invited_at = models.DateTimeField(auto_now_add=True)
-    accepted_at = models.DateTimeField(null=True, blank=True)
+    joined_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = ('organization', 'member')
@@ -53,4 +51,33 @@ class Organization(models.Model):
         return f"{self.name} - {self.cnpj}"
 
 
+class Invitation(models.Model):
+    email = models.EmailField()
 
+    invited_by = models.ForeignKey(Member, on_delete=models.CASCADE)
+
+    # destino do convite
+    organization = models.ForeignKey(
+        Organization, null=True, blank=True, on_delete=models.CASCADE
+    )
+
+    project = models.ForeignKey(
+        'scrun_master.Project', null=True, blank=True, on_delete=models.CASCADE
+    )
+
+    role = models.CharField(
+        max_length=20,
+        choices= RoleChoices.choices,
+        null=True, 
+        blank=True)
+
+    status = models.CharField(
+        max_length=20,
+        choices= OrganizationRoleChoices.choices,
+        default=OrganizationRoleChoices.PENDING
+    )
+
+    token = models.CharField(max_length=255, unique=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField()

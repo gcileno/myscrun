@@ -2,7 +2,7 @@ from core.view.viewsets import BaseViewSet
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import permissions
 from models import TeamMember
-from permissions.projects import IsProjectScrumMasterOrOwner, IsProjectMaster
+from core.permissions.projects import IsProjectScrumMasterOrOwner, IsProjectMaster
 from scrun_master.serializers.team import TeamMemberSerializer
 
 class TeamMemberViewSet(BaseViewSet):
