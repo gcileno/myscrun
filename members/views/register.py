@@ -18,7 +18,13 @@ class RegisterView(APIView):
         refresh = RefreshToken.for_user(user)
 
         return Response({
-            'token': str(refresh.access_token),
+            'access': str(refresh.access_token),
+            'refresh': str(refresh),
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+            },
             'member': {
                 'id': user.member.id,
                 'name': user.member.name,

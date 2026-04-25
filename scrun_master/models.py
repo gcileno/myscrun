@@ -54,7 +54,8 @@ class Task(models.Model):
     title = models.CharField(max_length=200, unique=True, blank=False, null=False)
     description = models.TextField(blank=True, null=False)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='todo')
-    
+
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='tasks', null=True, blank=True)
     sprint = models.ForeignKey(Sprint, on_delete=models.SET_NULL, null=True, related_name='tasks')
     
     assigned_to = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='assigned_tasks')
