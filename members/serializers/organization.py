@@ -13,4 +13,12 @@ class OrganizationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Organization
         fields = ['id', 'name', 'cnpj', 'created_at', 'director', 'projects']
-        read_only_fields = ['id', 'created_at', 'cnpj']
+        read_only_fields = ['id', 'created_at', 'director']
+
+    def create(self, validated_data):
+        request = self.context.get('request')
+
+        if request is not None and hasattr(request.user, 'member'):
+            validated_data['director'] = request.user.member
+
+        return super().create(validated_data)

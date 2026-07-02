@@ -14,7 +14,6 @@ class ProfileView(APIView):
 
         organizations = member.organizations.filter(
             organizationmember__is_active=True,
-            organizationmember__accepted=True
         )
 
         projects = Project.objects.filter(

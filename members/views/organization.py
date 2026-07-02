@@ -1,6 +1,6 @@
 from rest_framework import viewsets, permissions
-from models import Organization
-from serializers.organization import OrganizationSerializer
+from members.models import Organization
+from members.serializers.organization import OrganizationSerializer
 
 class OrganizationViewSet(viewsets.ModelViewSet):
     """
@@ -8,6 +8,7 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     """
     queryset = Organization.objects.all()
     serializer_class = OrganizationSerializer
+    lookup_url_kwarg = "id"
     
     # Define as permissões: Autenticado para ver, mas podes restringir a escrita
     permission_classes = [permissions.IsAuthenticated]
@@ -21,4 +22,13 @@ class OrganizationViewSet(viewsets.ModelViewSet):
         # Se não for staff/admin, vê apenas onde está vinculado
         if user.is_staff:
             return Organization.objects.all()
-        return Organization.objects.filter(director=user)
+
+        if not hasattr(user, 'member'):
+            return Organization.objects.none()
+
+        return Organization.objects.filter(
+            director=user.member,
+                ) | Organization.objects.filter(
+                    members=user.member,
+                    organizationmember__is_active=True,
+                )
